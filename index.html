@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collage de Cumpleaños</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .poem-container {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #ffffff;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .poem-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .poem-container button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            background: #ffc3a0;
+            color: #000;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .poem-container button:hover {
+            background: #ffafbd;
+            transform: scale(1.1);
+        }
+
+        .collage-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10;
+            overflow: auto;
+        }
+
+        .collage-container .title {
+            text-align: center;
+            color: #ffc3a0;
+            font-size: 2.5rem;
+            margin: 20px 0;
+        }
+
+        .collage-container .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        .collage-item {
+            width: 120px;
+            height: 120px;
+            margin: 10px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+            margin-left: 50px;
+        }
+
+        .collage-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .heart {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: red;
+            transform: rotate(-45deg);
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: red;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -7px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 7px;
+            top: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(-45deg);
+            }
+            50% {
+                transform: translateY(-200px) rotate(-45deg);
+            }
+            100% {
+                transform: translateY(0) rotate(-45deg);
+            }
+        }
+
+        /* Vista de imagen completa */
+        .image-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-viewer img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 5px solid #fff;
+            border-radius: 10px;
+        }
+
+        .image-viewer .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Poema -->
+    <div class="poem-container" id="poem">
+        <h1>¡Feliz Cumpleaños, Papá!</h1>
+        <p>
+            Hoy celebro tu vida, tu risa y tu amor,<br>
+            Eres nuestro faro, nuestra luz, nuestro sol.<br>
+            En cada paso que doy, tu fuerza está presente,<br>
+            ¡Eres el mejor padre, y eso es evidente!
+        </p>
+        <button onclick="showCollage()">Abre el Regalo 🎁</button>
+    </div>
+
+    <!-- Collage -->
+    <div class="collage-container" id="collage">
+        <span class="close" onclick="closeCollage()">×</span>
+        <div class="title">¡Feliz Cumpleaños!</div>
+        <div class="collage-item" onclick="viewImage('Sabri.jpg')"><img src="Sabri.jpg" alt="Foto 1"></div>
+        <div class="collage-item" onclick="viewImage('sabri2.jpg')"><img src="sabri2.jpg" alt="Foto 2"></div>
+        <div class="collage-item" onclick="viewImage('MGP_1808.jpg')"><img src="MGP_1808.jpg" alt="Foto 3"></div>
+        <div class="collage-item" onclick="viewImage('MGP_1810.jpg')"><img src="MGP_1810.jpg" alt="Foto 4"></div>
+        <div class="collage-item" onclick="viewImage('MGP_2071.jpg')"><img src="MGP_2071.jpg" alt="Foto 5"></div>
+        <div class="collage-item" onclick="viewImage('FB_IMG_15852695290209768.jpg')"><img src="FB_IMG_15852695290209768.jpg" alt="Foto 6"></div>
+    </div>
+
+    <!-- Vista de imagen completa -->
+    <div class="image-viewer" id="imageViewer">
+        <span class="close" onclick="closeImageViewer()">×</span>
+        <img id="fullImage" src="" alt="Imagen completa">
+    </div>
+
+    <!-- Corazones flotantes -->
+    <div class="heart" style="top: 10%; left: 20%;"></div>
+    <div class="heart" style="top: 30%; left: 50%;"></div>
+    <div class="heart" style="top: 50%; left: 70%;"></div>
+    <div class="heart" style="top: 80%; left: 30%;"></div>
+
+    <script>
+        const poemContainer = document.getElementById('poem');
+        const collageContainer = document.getElementById('collage');
+        const imageViewer = document.getElementById('imageViewer');
+        const fullImage = document.getElementById('fullImage');
+
+        function showCollage() {
+            poemContainer.style.display = 'none';
+            collageContainer.style.display = 'block';
+        }
+
+        function closeCollage() {
+            collageContainer.style.display = 'none';
+            poemContainer.style.display = 'block';
+        }
+
+        function viewImage(src) {
+            fullImage.src = src;
+            imageViewer.style.display = 'flex';
+        }
+
+        function closeImageViewer() {
+            imageViewer.style.display = 'none';
+        }
+    </script>
+</body>
+  </html>
